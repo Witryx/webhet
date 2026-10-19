@@ -1,7 +1,7 @@
 export const pricing = [
   {
     name: "Start",
-    price: 12990,
+    price: 9990,
     description: "Velké plány začínají dobrým webem.",
     audience: "Pro jednotlivce a první online prezentaci",
     featured: false,
@@ -15,7 +15,7 @@ export const pricing = [
   },
   {
     name: "Profi",
-    price: 24990,
+    price: 19990,
     description: "Prostor pro vše, co vás odlišuje.",
     audience: "Pro firmy s širší nabídkou služeb",
     featured: true,
@@ -29,7 +29,7 @@ export const pricing = [
   },
   {
     name: "Business",
-    price: 49990,
+    price: 39990,
     description: "Když od webu potřebujete víc.",
     audience: "Pro náročnější weby a propojení systémů",
     featured: false,

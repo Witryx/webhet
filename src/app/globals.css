@@ -749,6 +749,10 @@ p {
 .text-link:hover svg {
   transform: translateX(3px);
 }
+.contact-phone {
+  display: flex;
+  width: fit-content;
+}
 .service-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1220,6 +1224,11 @@ p {
 .footer-main a:hover {
   color: #8eb6ff;
 }
+.footer-main .text-link {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  gap: 8px;
+}
 .footer-main > div:last-child .text-link {
   font-size: 12px;
   margin-top: 8px;
@@ -1354,6 +1363,10 @@ p {
 }
 .prose p + p {
   margin-top: 14px;
+}
+.legal-updated {
+  font-size: 12px !important;
+  color: var(--muted);
 }
 .prose a {
   text-decoration: underline;
@@ -1490,6 +1503,7 @@ p {
   height: auto;
   aspect-ratio: 16/10;
   object-fit: cover;
+  object-position: top;
 }
 .project-card > div {
   padding: 26px;
@@ -2380,7 +2394,7 @@ p {
     font-size: 12px;
   }
   .footer-main {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.8fr 1.2fr;
     gap: 35px 20px;
     padding: 40px 0;
   }

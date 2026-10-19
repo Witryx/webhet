@@ -7,7 +7,7 @@ const publicConfig = z
   })
   .parse({
     url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "",
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "petahecik@gmail.com",
   });
 
 export const site = {
@@ -16,14 +16,23 @@ export const site = {
   description:
     "Tvořím moderní webové stránky, e-shopy a aplikace. Osobní spolupráce, promyšlený design a technologie, které dávají smysl.",
   ...publicConfig,
-  // Owner-supplied details. Empty values are deliberately not invented.
-  founder: { name: "", bio: "", location: "", photo: "", experience: "" },
+  phone: { display: "+420 608 170 407", href: "tel:+420608170407" },
+  // No portrait: the About page uses the original WebHet monogram.
+  founder: {
+    name: "Petr Hetzendorf",
+    bio: "",
+    location: "",
+    photo: "",
+    experience: "",
+  },
   business: {
-    name: "",
-    registrationId: "",
-    address: "",
-    vatStatus: "",
-    retention: "",
+    name: "Petr Hetzendorf",
+    registrationId: "29704685",
+    // Registered business address verified in the official ARES on 2026-10-19.
+    address: "Touchořiny 8, 411 45 Lovečkovice",
+    vatStatus: "Nejsem plátce DPH. DPH se k uvedeným cenám nepřipočítává.",
+    retention:
+      "Poptávky bez navazující smlouvy uchovávám nejdéle 12 měsíců od poslední věcné komunikace. Poté je odstraním z pracovní schránky a z dostupné historie odesílání. Pokud navážeme spolupráci, relevantní údaje dále zpracovávám pro plnění smlouvy, zákonné povinnosti a případné právní nároky po nezbytnou dobu.",
   },
   social: [] as { label: string; url: string }[],
 };

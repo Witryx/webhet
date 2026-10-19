@@ -16,6 +16,10 @@ test("all public routes, metadata, assets and navigation are coherent", async ({
     "/sluzby/webove-aplikace",
     "/sluzby/sprava-webu",
     "/projekty",
+    "/projekty/midari",
+    "/projekty/egyptskoceska-reality",
+    "/projekty/petr-pavlat-reality",
+    "/projekty/fixplace",
     "/o-mne",
     "/cenik",
     "/kontakt",
@@ -141,6 +145,76 @@ async function fillLead(page: import("@playwright/test").Page) {
     .fill("Potřebuji nový prezentační web pro své podnikání.");
   await page.getByRole("checkbox").check();
 }
+
+test("portfolio filters, previews and all project details work", async ({
+  page,
+}) => {
+  await page.goto("/projekty");
+  await expect(page.locator(".project-card")).toHaveCount(4);
+  await page.getByRole("button", { name: "E-shopy", exact: true }).click();
+  await expect(page.locator(".project-card")).toHaveCount(1);
+  await expect(page.locator(".project-card")).toContainText("MIDARI");
+  await page
+    .getByRole("button", { name: "Webové stránky", exact: true })
+    .click();
+  await expect(page.locator(".project-card")).toHaveCount(3);
+  await page.getByRole("button", { name: "Vše", exact: true }).click();
+  await expect(page.locator(".project-card")).toHaveCount(4);
+  for (const [slug, title, liveUrl] of [
+    ["midari", "MIDARI", "https://midari.cz/"],
+    [
+      "egyptskoceska-reality",
+      "Egyptsko Česká Reality",
+      "https://www.egyptskoceskareality.cz/",
+    ],
+    [
+      "petr-pavlat-reality",
+      "Petr Pavlát reality",
+      "https://www.petrpavlat-reality.cz/",
+    ],
+    ["fixplace", "FixPlace", "https://www.fixplace.cz/"],
+  ]) {
+    await page.goto(`/projekty/${slug}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
+    await expect(
+      page.getByRole("link", { name: "Navštívit web" }),
+    ).toHaveAttribute("href", liveUrl);
+    await expect
+      .poll(() =>
+        page
+          .locator(".project-cover")
+          .evaluate((image) => (image as HTMLImageElement).naturalWidth),
+      )
+      .toBeGreaterThan(0);
+  }
+});
+
+test("owner details, prices and completed legal information are consistent", async ({
+  page,
+}) => {
+  await page.goto("/kontakt");
+  await expect(
+    page.locator("main").getByRole("link", { name: "petahecik@gmail.com" }),
+  ).toHaveAttribute("href", "mailto:petahecik@gmail.com");
+  await expect(
+    page.locator("main").getByRole("link", { name: /608 170 407/ }),
+  ).toHaveAttribute("href", "tel:+420608170407");
+  await page.goto("/cenik");
+  await expect(page.locator(".pricing-card").first()).toContainText(/9\s990/);
+  await expect(
+    page.getByText("Nejsem plátce DPH.", { exact: false }),
+  ).toBeVisible();
+  await page.goto("/o-mne");
+  await expect(page.locator(".about-copy h2")).toHaveText("Petr Hetzendorf");
+  await expect(page.locator(".about-monogram")).toBeVisible();
+  await expect(page.locator(".about-copy")).not.toContainText("DOPLNIT");
+  await page.goto("/ochrana-osobnich-udaju");
+  await expect(page.locator("main")).toContainText("29704685");
+  await expect(page.locator("main")).toContainText("12 měsíců");
+  await expect(page.locator("main")).not.toContainText(
+    "DOPLNIT PŘED SPUŠTĚNÍM",
+  );
+});
 
 test("contact validates, preserves inputs on errors and prevents duplicate submissions", async ({
   page,

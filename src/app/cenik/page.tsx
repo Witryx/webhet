@@ -14,7 +14,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(
   "Ceník tvorby webových stránek",
-  "Orientační ceny webových stránek od 12 990 Kč. Porovnejte varianty Start, Profi a Business, rozsah služeb a možnosti individuální nabídky.",
+  "Orientační ceny webových stránek od 9 990 Kč. Porovnejte varianty Start, Profi a Business, rozsah služeb a možnosti individuální nabídky.",
   "/cenik",
 );
 export default function PricingPage() {

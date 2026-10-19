@@ -55,14 +55,12 @@ export default function CookiesPage() {
               podle skutečného použití zajistit souhlas a blokování skriptů do
               jeho udělení.
             </p>
-            <div className="notice">
-              <strong>KONTROLA PŘED SPUŠTĚNÍM</strong>
-              <p>
-                Po nasazení ověřte také chování hostingu a případných
-                doplňkových služeb. Toto prohlášení popisuje aplikaci v tomto
-                repozitáři; nové integrace mohou vyžadovat jeho změnu.
-              </p>
-            </div>
+            <h2>Aktualizace těchto informací</h2>
+            <p>
+              Pokud se způsob používání cookies nebo zapojené služby změní,
+              aktualizuji tento přehled a případně doplním správu souhlasu.
+              Poslední aktualizace: 19. 10. 2026.
+            </p>
           </div>
         </Container>
       </section>

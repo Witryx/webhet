@@ -2,7 +2,7 @@ export const faqs = [
   {
     question: "Kolik stojí nový web?",
     answer:
-      "Jednostránková prezentace začíná orientačně na 12 990 Kč, firemní web na 24 990 Kč. Konečná cena závisí na obsahu, funkcích a integracích. Před zahájením ode mě dostanete konkrétní nabídku s vymezeným rozsahem.",
+      "Jednostránková prezentace začíná orientačně na 9 990 Kč, firemní web na 19 990 Kč. Konečná cena závisí na obsahu, funkcích a integracích. Před zahájením ode mě dostanete konkrétní nabídku s vymezeným rozsahem.",
   },
   {
     question: "Jak dlouho trvá vytvoření webu?",

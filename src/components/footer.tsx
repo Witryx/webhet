@@ -47,6 +47,10 @@ export function Footer() {
                 <ArrowUpRight size={16} aria-hidden="true" />
               </Link>
             )}
+            <a href={site.phone.href} className="text-link contact-phone">
+              {site.phone.display}
+              <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
             {site.social.map((social) => (
               <a key={social.url} href={social.url} rel="noopener noreferrer">
                 {social.label}

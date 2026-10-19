@@ -58,6 +58,9 @@ export default async function ContactPage({
                   {site.email} ↗
                 </a>
               )}
+              <a href={site.phone.href} className="text-link contact-phone">
+                {site.phone.display} ↗
+              </a>
               <ol className="contact-expectations">
                 <li>
                   <span>01</span>Pročtu si vaši zprávu a ozvu se na uvedený

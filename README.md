@@ -2,6 +2,8 @@
 
 Český web osobního studia pro webdesign a vývoj. Next.js App Router, React, TypeScript ve strict režimu, Tailwind CSS, Lucide, Zod a serverové odesílání přes Resend. Připraveno pro Vercel; žádná databáze ani externí účet nejsou potřeba pro zobrazení webu.
 
+Aktuálně jsou doplněné kontakty Petra Hetzendorfa, IČO a sídlo ověřené v ARES, status neplátce DPH a ceny od 9 990 Kč. Portfolio obsahuje čtyři vlastníkem dodané projekty se skutečnými náhledy. Profil je bez fotografie. Provozní postupy, zdroje a přesný seznam zbývajícího nastavení jsou v [docs/provoz.md](docs/provoz.md).
+
 ## Spuštění
 
 Vyžaduje Node.js 22+ a npm. Ve Windows PowerShell s omezenou execution policy použijte `npm.cmd` místo `npm`.
@@ -38,7 +40,7 @@ Server Components jsou výchozí. Klientský kód je omezený na menu, formulá�
 
 Do `projects` v `src/content/projects.ts` přidejte objekt typu `Project`. Vyplňte unikátní slug, kategorii, shrnutí, roli, zadání, cíle, řešení, funkce a technologie. U obrázků uveďte lokální cestu, popisný alt a skutečné rozměry. Soubory uložte do `public/images/`. Nepoužívejte neodsouhlasené materiály nebo nepodložené výsledky.
 
-Nastavte `permissionToPublish: true` teprve po získání souhlasu. Schválený projekt se automaticky objeví v portfoliu, detailní routě, sitemapě a relevantní službě. Pole `results` může zůstat prázdné; nemusíte vymýšlet metriky. Filtry se zobrazí až od čtyř publikovaných projektů ve více kategoriích. Vzdálené obrázky vyžadují explicitní `images.remotePatterns` v Next konfiguraci; výchozí řešení používá lokální soubory.
+Nastavte `permissionToPublish: true` teprve po získání souhlasu. Schválený projekt se automaticky objeví v portfoliu, detailní routě, sitemapě a relevantní službě. Neznámá role, zadání nebo řešení mohou mít prázdný řetězec, cíle, technologie a výsledky prázdné pole; prázdné části se nezobrazují. Bez podkladů nevymýšlejte původní zadání nebo metriky. Filtry se zobrazí až od čtyř publikovaných projektů ve více kategoriích. Vzdálené obrázky vyžadují explicitní `images.remotePatterns` v Next konfiguraci; výchozí řešení používá lokální soubory.
 
 ## Konfigurace prostředí
 
@@ -59,7 +61,7 @@ Proměnné `NEXT_PUBLIC_*` jsou veřejné a sestavují se do klientského kódu.
 
 1. V účtu Resend přidejte vlastní doménu odesílatele a do DNS vložte přesné SPF/DKIM záznamy, které Resend zobrazí. Neukládejte odhadnuté DNS hodnoty z návodu. Případnou DMARC politiku nastavte podle svého e-mailového provozu.
 2. Vyčkejte na ověření domény. Vytvořte klíč s potřebným oprávněním a doplňte tři serverové proměnné výše.
-3. Na Vercelu zprovozněte také sdílený Redis limiter. Před připojením formuláře doplňte právní informace a proces práce s poptávkami.
+3. Na Vercelu zprovozněte také sdílený Redis limiter. Před zapnutím ověřte podmínky účtů a retenční nastavení podle [provozního postupu](docs/provoz.md). Příjemce má výchozí hodnotu `petahecik@gmail.com`; `CONTACT_TO_EMAIL` ji může přepsat. Do `CONTACT_FROM_EMAIL` patří adresa z ověřené odesílací domény, nikoli osobní Gmail.
 4. Po nasazení odešlete vlastní testovací poptávku se souhlasem majitele schránky. Ověřte záznam v Resend, doručení včetně spamu a fungování Reply-To. Přijetí poskytovatelem neznamená potvrzené doručení do schránky.
 
 Bez konfigurace API vrací 503 a formulář zobrazuje skutečnou chybu. V developmentu je uvedeno, které proměnné chybí. Selhání poskytovatele vrací 502; hodnoty se při chybě zachovávají. Úspěch je oznámen až po přijetí požadavku službou Resend. Aplikace neposílá automatickou odpověď návštěvníkovi a neukládá poptávky do databáze.
@@ -94,11 +96,11 @@ npx lighthouse http://127.0.0.1:3000 --chrome-flags="--headless --no-sandbox" --
 
 Ověřeno 19. 10. 2026 na lokálním produkčním buildu:
 
-- `lint`, `typecheck`, `build`, kontrola Prettier a 40 unit testů procházejí.
-- Šest Playwright testů prochází. Všechny veřejné routy mají jedinečný titul, správný jazyk, canonical a H1; ověřeny jsou OG obrázek, favicon, sitemap, robots a neexistující detaily.
-- Axe na všech 12 veřejných routách na desktopu a homepage/kontaktu/ceníku na mobilu: bez zjištěných porušení testovaných pravidel WCAG A/AA. Klávesnice ověřena na skip odkazu, menu, FAQ a formuláři; reduced motion funguje.
+- `lint`, `typecheck`, `build`, kontrola Prettier a 43 unit testů procházejí.
+- Osm Playwright testů prochází. Ověřují všechny veřejné routy, jedinečné tituly, jazyk, canonical a H1, OG obrázek, favicon, sitemap, robots a neexistující detaily. Přidané scénáře ověřují čtyři projekty, filtry, načtení náhledů, kontakty, ceny, profil bez fotografie a dokončené právní texty.
+- Axe na všech 16 veřejných routách na desktopu a homepage/kontaktu/ceníku na mobilu: bez zjištěných porušení testovaných pravidel WCAG A/AA. Klávesnice ověřena na skip odkazu, menu, FAQ a formuláři, včetně reduced motion.
 - Responzivní kontrola homepage, portfolia, ceníku a kontaktu při 320, 375, 768, 1024, 1440 a 1920 px: bez horizontálního přetečení. Vizuálně ověřeny desktopové a mobilní screenshoty homepage a kontaktu.
-- Lighthouse v mobilním simulovaném profilu: homepage Performance **89**, Accessibility **100**, Best Practices **100**, SEO **66**; kontakt **90 / 100 / 100 / 66**. SEO je záměrně snížené kvůli výchozímu `noindex` a zákazu v robots.txt. Indexaci zapněte teprve po schválení produkce.
+- Původní Lighthouse měření před doplněním portfolia v mobilním simulovaném profilu: homepage Performance **89**, Accessibility **100**, Best Practices **100**, SEO **66**; kontakt **90 / 100 / 100 / 66**. SEO je záměrně snížené kvůli výchozímu `noindex` a zákazu v robots.txt. Indexaci zapněte teprve po schválení produkce. Po nasazení znovu změřte aktuální obsah.
 - Laboratorní LCP homepage **3,4 s**, kontakt **3,3 s**, CLS **0** na obou stránkách. Homepage těsně nesplňuje cíl Performance 90 a laboratorní LCP přesahuje 2,5 s. Největší položkou kritické cesty jsou požadovaná písma; hlavní nadpis se již nevynořuje z opacity 0, přednostně se přednačítá titulkové písmo a `font-display: optional` omezuje pozdní výměnu fontu při pomalém připojení. Další měření proveďte na skutečném hostingu.
 
 Lokální reporty a screenshoty jsou v ignorované složce `.qa/`; znovu je vytvoříte Lighthouse příkazy výše a `node scripts/visual-qa.mjs`. Reálné CWV na p75 vyžadují produkční provoz; laboratorní skóre není zárukou výsledků skutečných návštěvníků. Automatický axe audit nenahrazuje ruční audit. Skutečná čtečka obrazovky, vzdálený Vercel preview a doručení e-mailu nebyly v tomto prostředí ověřeny. Úspěšné odeslání je v testech simulované; vyžaduje vlastní produkční kontrolu po doplnění konfigurace.
@@ -119,18 +121,17 @@ V této implementační relaci není vytvořen vzdálený Vercel projekt, přid�
 ## Nutné údaje před spuštěním
 
 - Ověřit vlastnictví domény a použitelnost značky WebHet.
-- Doplnit jméno zakladatele, schválený profil a případně fotografii.
-- Doplnit správce údajů, IČO, sídlo, veřejný e-mail a pravdivý status DPH v konfiguraci.
-- Schválit ceny, rozsahy, náklady třetích stran a podmínky následné péče.
-- Dokončit právní informace: účel, právní základ, doby uchování, skuteční zpracovatelé, regiony a případné předávání údajů. Zajistit postup výmazu u e-mailového poskytovatele i ve schránce.
+- Profil zakladatele lze později rozšířit; fotografie se na přání vlastníka nepoužívá. Identifikace, sídlo, e-mail, telefon a status DPH jsou doplněné.
+- Při uzavření každé zakázky určit konkrétní rozsah, náklady třetích stran a podmínky případné následné péče.
+- Ověřit podmínky a regiony skutečných účtů poskytovatelů a provádět uvedený postup výmazu. Právní texty popisují zvolený účel a dobu uchování; uzavření smluv s dodavateli a mazání schránky nejsou automatické.
 - Nakonfigurovat a ověřit Resend, schránku a Redis rate limiting. Ověřit limity poskytovatelů podle zvoleného tarifu.
-- Dodat skutečné reference a svolení, pokud se mají publikovat. Prázdné portfolio je podporovaný stav.
+- Při přidávání dalších referencí doplnit skutečné podklady a svolení. Čtyři stávající odkazy dodal vlastník jako své portfolio; rozsahy rolí a obchodní výsledky se bez podkladů nezobrazují.
 - Ručně ověřit čtečku obrazovky, finální češtinu a skutečný produkční provoz.
 
 Obchodní podmínky nejsou vymyšlené ani publikované. Analytika, Supabase, přihlášení, platby a vlastní CMS nejsou ve v1 zapnuté. Proto web nemá nefunkční cookie lištu ani předstíraný administrátorský panel. Před pozdějším přidáním měření doplňte příslušný souhlas a aktualizujte právní informace.
 
 ## Licence a podklady
 
-Logo, favicon, geometrický hero koncept a Open Graph kompozice jsou původní lokální SVG/CSS/JSX prvky tohoto projektu. Hero je výslovně označen jako vizuální koncept a není klientskou referencí. Nejsou použité cizí fotografie, klientská loga ani vymyšlené reference. Inter a Space Grotesk jsou distribuovány pod SIL Open Font License prostřednictvím next/font; Lucide pod ISC. Závislosti si zachovávají vlastní licence.
+Logo, favicon, geometrický hero koncept a Open Graph kompozice jsou původní lokální SVG/CSS/JSX prvky tohoto projektu. Hero je výslovně označen jako vizuální koncept a není klientskou referencí. Portfolio používá skutečné screenshoty čtyř webů dodaných vlastníkem, pořízené 19. 10. 2026. Obsah klientských webů si zachovává příslušná autorská práva; screenshot není přenos práv k jejich fotografiím či logům. Nejsou přidané vymyšlené reference ani metriky. Inter a Space Grotesk jsou distribuovány pod SIL Open Font License prostřednictvím next/font; Lucide pod ISC. Závislosti si zachovávají vlastní licence.
 
 Technické zdroje: [Next.js instalace](https://nextjs.org/docs/app/getting-started/installation), [Resend a Next.js](https://resend.com/nextjs), [Upstash REST API](https://upstash.com/docs/redis/features/restapi). DNS a účty nastavujte podle aktuálních pokynů příslušných poskytovatelů. Pro dopracování právních informací: [ÚOOÚ — základní příručka](https://uoou.gov.cz/verejnost/zakladni-prirucka-k-ochrane-udaju) a [práva subjektu údajů](https://uoou.gov.cz/poradna/poradna-gdpr/prava-subjektu-udaju).

@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { site } from "@/config/site";
 import {
   emailConfigSchema,
   projectTypes,
@@ -38,7 +39,7 @@ export function emailContent(input: ContactInput) {
 export function getEmailConfig() {
   return emailConfigSchema.safeParse({
     key: process.env.RESEND_API_KEY,
-    to: process.env.CONTACT_TO_EMAIL,
+    to: process.env.CONTACT_TO_EMAIL || site.email,
     from: process.env.CONTACT_FROM_EMAIL,
   });
 }

@@ -52,19 +52,27 @@ export default async function ProjectDetail({
           />
           <div className="project-details">
             <div>
-              <h2>Zadání a výzva</h2>
-              <p>{project.challenge}</p>
-              <h2>Cíle projektu</h2>
-              <ul className="check-list">
-                {project.goals.map((goal) => (
-                  <li key={goal}>
-                    <Check size={17} aria-hidden="true" />
-                    {goal}
-                  </li>
-                ))}
-              </ul>
-              <div className="subsection">
-                <h2>Navržené řešení</h2>
+              {project.challenge && (
+                <>
+                  <h2>Zadání a výzva</h2>
+                  <p>{project.challenge}</p>
+                </>
+              )}
+              {project.goals.length > 0 && (
+                <>
+                  <h2>Cíle projektu</h2>
+                  <ul className="check-list">
+                    {project.goals.map((goal) => (
+                      <li key={goal}>
+                        <Check size={17} aria-hidden="true" />
+                        {goal}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+              <div>
+                <h2>O webu</h2>
                 <p>{project.solution}</p>
                 <ul className="check-list">
                   {project.features.map((feature) => (
@@ -90,8 +98,12 @@ export default async function ProjectDetail({
               )}
             </div>
             <aside>
-              <h2>Moje role</h2>
-              <p>{project.role}</p>
+              {project.role && (
+                <>
+                  <h2>Moje role</h2>
+                  <p>{project.role}</p>
+                </>
+              )}
               {project.client && (
                 <>
                   <h2>Klient</h2>
@@ -104,8 +116,12 @@ export default async function ProjectDetail({
                   <p>{project.industry}</p>
                 </>
               )}
-              <h2>Technologie</h2>
-              <p>{project.tech.join(" · ")}</p>
+              {project.tech.length > 0 && (
+                <>
+                  <h2>Technologie</h2>
+                  <p>{project.tech.join(" · ")}</p>
+                </>
+              )}
               {project.liveUrl && (
                 <a
                   href={project.liveUrl}

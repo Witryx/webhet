@@ -10,6 +10,10 @@ try {
     ["home-mobile", "/", 375, 812],
     ["contact-desktop", "/kontakt", 1440, 1000],
     ["contact-mobile", "/kontakt", 320, 812],
+    ["portfolio-desktop", "/projekty", 1440, 1000],
+    ["portfolio-mobile", "/projekty", 375, 812],
+    ["project-mobile", "/projekty/midari", 320, 812],
+    ["privacy-mobile", "/ochrana-osobnich-udaju", 320, 812],
   ]) {
     await page.setViewportSize({ width, height });
     await page.goto(`http://127.0.0.1:3000${path}`);
